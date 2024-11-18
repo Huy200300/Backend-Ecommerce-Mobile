@@ -7,10 +7,9 @@ const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 
 const app = express();
-// const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 8080;
 connectDB();
 
-// app.use(cors());
 app.use(
   cors({
     origin: process.env.FRONTEND_URL,
@@ -22,10 +21,10 @@ app.use(cookieParser());
 app.use(express.json());
 app.use("/api", router);
 
-app.get("/test", (req, res) => {
+app.get("/", (req, res) => {
   res.send("API is running!");
 });
 
-// app.listen(PORT, () => {
-//   console.log(`server is running on port ` + PORT);
-// });
+app.listen(PORT, () => {
+  console.log(`server is running on port ` + PORT);
+});
