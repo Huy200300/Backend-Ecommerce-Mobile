@@ -22,7 +22,7 @@ app.use(cookieParser());
 app.use(express.json());
 app.use("/api", router);
 
-app.get("/", (req, res) => {
+app.get("/test", (req, res) => {
   res.send("API is running!");
 });
 
