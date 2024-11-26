@@ -3,7 +3,6 @@ const productModel = require("../../model/productModel");
 async function updateProductStatus(req, res) {
   const { productId, status } = req.body;
 
-  console.log(productId,status)
 
   if (!["Pending", "Completed"].includes(status)) {
     return res.status(400).json({ message: "Invalid status" });

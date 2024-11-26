@@ -38,7 +38,6 @@ async function getCategoryProduct(req, res) {
       await Promise.all(productByCategoryPromises)
     ).filter(Boolean); // Lọc bỏ những giá trị null
 
-    console.log("1")
 
     res.json({
       message: "Product by category",

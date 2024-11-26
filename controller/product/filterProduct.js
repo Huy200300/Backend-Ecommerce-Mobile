@@ -4,7 +4,6 @@ async function filterProduct(req, res) {
   try {
     const { category, brands, priceRange, limit, page } = req.body;
 
-    console.log(priceRange)
 
     let filter = {
       status: "Completed",

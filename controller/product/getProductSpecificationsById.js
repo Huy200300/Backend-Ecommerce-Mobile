@@ -1,9 +1,4 @@
 const productModel = require("../../model/productModel");
-const MobileSpecs = require("../../model/MobileSpecs");
-const AccessorySpecs = require("../../model/AccessorySpecs");
-const LaptopSpecs = require("../../model/LaptopSpecs");
-const TabletSpecs = require("../../model/TabletSpecs");
-const WatchSpecs = require("../../model/WatchSpecs");
 async function getProductSpecificationsById(req, res) {
   try {
     const { productId } = req.params;
