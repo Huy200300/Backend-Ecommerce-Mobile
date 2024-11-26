@@ -73,6 +73,7 @@ const productSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
+    suppressReservedKeysWarning: true,
   }
 );
 const productModel = mongoose.model("product", productSchema);

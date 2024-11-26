@@ -13,5 +13,5 @@ const watchSpecsSchema = new mongoose.Schema({
   isFitnessTracker: Boolean, // Theo dõi sức khỏe (true/false)
 });
 
-const WatchSpecs = mongoose.model("WatchSpecs", watchSpecsSchema);
+const WatchSpecs = mongoose.model("watches", watchSpecsSchema);
 module.exports = WatchSpecs;

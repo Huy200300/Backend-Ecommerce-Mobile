@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 
+// Định nghĩa schema
 const accessorySpecsSchema = new mongoose.Schema({
   compatibility: [String], // Tương thích với thiết bị nào (ví dụ: ["iPhone", "iPad"])
   material: String, // Chất liệu (ví dụ: "Plastic, Metal")
@@ -10,5 +11,9 @@ const accessorySpecsSchema = new mongoose.Schema({
   batteryLife: String, // Thời gian pin nếu có (ví dụ: "20 hours")
 });
 
-const AccessorySpecs = mongoose.model("AccessorySpecs", accessorySpecsSchema);
+// Kiểm tra nếu model đã tồn tại, thì không đăng ký lại
+const AccessorySpecs =
+  mongoose.models.accessory ||
+  mongoose.model("accessory", accessorySpecsSchema);
+
 module.exports = AccessorySpecs;

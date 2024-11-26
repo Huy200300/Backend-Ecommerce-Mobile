@@ -4,6 +4,8 @@ async function filterProduct(req, res) {
   try {
     const { category, brands, priceRange, limit, page } = req.body;
 
+    console.log(priceRange)
+
     let filter = {
       status: "Completed",
     };
@@ -25,7 +27,7 @@ async function filterProduct(req, res) {
       .limit(limit * 1)
       .skip((page - 1) * limit)
       .exec();
-    // console.log(products);
+    console.log(filter);
 
     const count = await productModel.countDocuments(filter);
 

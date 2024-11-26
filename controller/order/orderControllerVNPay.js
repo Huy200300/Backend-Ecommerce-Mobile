@@ -56,10 +56,6 @@ const createVNPAYTransaction = async (req, res) => {
   try {
     const productsInfo = await Promise.all(
       productId.map(async (item) => {
-        // const product = await productModel.findById(item.productId);
-        // if (!product) {
-        //   throw new Error(`Product not found: ${item.productId}`);
-        // }
         return {
           productId: item._id,
           name: item.productName,
@@ -124,10 +120,16 @@ const vnpayReturn = async (req, res) => {
       order.transactionId = vnp_Params["vnp_TransactionNo"];
       order.status =
         vnp_Params["vnp_ResponseCode"] === "00" ? "paid" : "failed";
+      order.isPaid = true;
+      order.paidAt = Date.now();
+      order.statusHistory.push({
+        orderStatus: "Pending",
+        updatedAt: Date.now(),
+      });
       if (vnp_Params["vnp_ResponseCode"] === "failed") {
         order.paymentDetails = {
-          card: "no",
-          bank: "Chưa thanh toán",
+          card: "không",
+          bank: "không",
         };
       } else {
         order.paymentDetails = {
@@ -140,21 +142,49 @@ const vnpayReturn = async (req, res) => {
 
       if (vnp_Params["vnp_ResponseCode"] === "00") {
         const promises = order.productDetails.map(async (product) => {
-          await productModel.findOneAndUpdate(
-            {
-              _id: product.productId,
-              countInStock: { $gte: product.quantity },
-            },
-            {
-              $inc: {
-                countInStock: -product.quantity,
-                selled: +product.quantity,
+          if (product.selectedColor) {
+            // $elemMatch là một toán tử trong MongoDB dùng để tìm kiếm các
+            // phần tử trong mảng mà thỏa mãn tất cả các điều kiện trong biểu thức của nó.
+            await productModel.findOneAndUpdate(
+              {
+                _id: product.productId,
+                colors: {
+                  $elemMatch: {
+                    colorName: product.selectedColor,
+                    stock: { $gte: product.quantity },
+                  },
+                },
               },
-            },
-            {
-              new: true,
-            }
-          );
+              {
+                $inc: {
+                  "colors.$[elem].stock": -product.quantity, // Trừ stock theo số lượng mua
+                  selled: product.quantity, // Tăng số lượng đã bán
+                },
+              },
+              {
+                // arrayFilters cung cấp điều kiện lọc cho các phần tử mảng mà bạn muốn áp dụng cập nhật.
+                arrayFilters: [{ "elem.colorName": product.selectedColor }],
+                new: true,
+              }
+            );
+          } else {
+            // Nếu sản phẩm không có `selectedColor`, cập nhật `countInStock` và `selled`
+            await productModel.findOneAndUpdate(
+              {
+                _id: product.productId,
+                countInStock: { $gte: product.quantity }, // Kiểm tra tồn kho của sản phẩm
+              },
+              {
+                $inc: {
+                  countInStock: -product.quantity, // Trừ số lượng tồn kho
+                  selled: +product.quantity, // Tăng số lượng đã bán
+                },
+              },
+              {
+                new: true,
+              }
+            );
+          }
         });
 
         await Promise.all(promises);
@@ -208,13 +238,11 @@ const orderVNPAY = async (req, res) => {
       };
     }
 
-
     const orders = await Order.find(filter)
       .skip((page - 1) * limit)
       .limit(parseInt(limit))
       .sort({ createdAt: -1 })
       .exec();
-
 
     const totalOrders = await Order.countDocuments(filter);
 

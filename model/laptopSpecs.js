@@ -15,5 +15,5 @@ const laptopSpecsSchema = new mongoose.Schema({
   hasTouchscreen: Boolean, // Màn hình cảm ứng (true/false)
 });
 
-const LaptopSpecs = mongoose.model("LaptopSpecs", laptopSpecsSchema);
+const LaptopSpecs = mongoose.model("laptop", laptopSpecsSchema);
 module.exports = LaptopSpecs;

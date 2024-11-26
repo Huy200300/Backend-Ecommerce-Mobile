@@ -14,5 +14,5 @@ const tabletSpecsSchema = new mongoose.Schema({
   hasStylusSupport: Boolean, // Hỗ trợ bút cảm ứng (ví dụ: true/false)
 });
 
-const TabletSpecs = mongoose.model("TabletSpecs", tabletSpecsSchema);
+const TabletSpecs = mongoose.model("ipad", tabletSpecsSchema);
 module.exports = TabletSpecs;

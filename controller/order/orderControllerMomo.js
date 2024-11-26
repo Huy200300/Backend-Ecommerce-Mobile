@@ -188,6 +188,7 @@ const paymentCallback = async (req, res) => {
       orderStatus: "Pending",
       updatedAt: Date.now(),
     });
+    order.isPaid = true;
     order.paidAt = Date.now();
 
     const promises = order.productDetails.map(async (product) => {
