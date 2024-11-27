@@ -11,7 +11,7 @@ connectDB();
 
 app.use(
   cors({
-    origin: true,
+    origin: "https://backend-ecommerce-mobile.vercel.app",
     credentials: true,
   })
 );
