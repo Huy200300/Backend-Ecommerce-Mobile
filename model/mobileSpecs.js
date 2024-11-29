@@ -12,6 +12,6 @@ const mobileSpecsSchema = new mongoose.Schema({
   connectivity: String, // Kết nối (ví dụ: "5G, Wi-Fi 6")
   weight: String, // Khối lượng (ví dụ: "180g")
 });
-
-const MobileSpecs = mongoose.model("mobiles", mobileSpecsSchema);
+const MobileSpecs =
+  mongoose.models.mobiles || mongoose.model("mobiles", mobileSpecsSchema);
 module.exports = MobileSpecs;

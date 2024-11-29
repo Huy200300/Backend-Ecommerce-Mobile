@@ -10,6 +10,7 @@ const secretKey = process.env.MOMO_SECRETKEY;
 const paymentMomo = async (req, res) => {
   const { userId, products, shipping, shippingMethod, shippingAddress } =
     req.body;
+  console.log(req.body);
 
   // Kiểm tra xem có giao dịch nào trước đó chưa hoàn tất hoặc bị lỗi không
   const existingOrder = await Order.findOne({
@@ -61,7 +62,7 @@ const paymentMomo = async (req, res) => {
   const orderInfo = "pay with MoMo";
   const partnerCode = "MOMO";
   const redirectUrl = "http://localhost:8080/api/payment-result";
-  const ipnUrl = "https://04bf-42-119-190-21.ngrok-free.app/api/callback";
+  const ipnUrl = "https://c71c-42-118-12-148.ngrok-free.app/api/callback";
   const requestType = "payWithMethod";
   const amount = req.body.amount;
   const orderId = partnerCode + new Date().getTime();

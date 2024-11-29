@@ -2,7 +2,6 @@ const productModel = require("../../model/productModel");
 
 async function getCategoryProduct(req, res) {
   try {
-    console.log("123")
     // Bước 1: Đếm số lượng sản phẩm trong từng category có status = "Completed" và sắp xếp
     const categories = await productModel.aggregate([
       { $match: { status: "Completed" } }, // Lọc các sản phẩm có status = "Completed"

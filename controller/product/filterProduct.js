@@ -26,7 +26,6 @@ async function filterProduct(req, res) {
       .limit(limit * 1)
       .skip((page - 1) * limit)
       .exec();
-    console.log(filter);
 
     const count = await productModel.countDocuments(filter);
 

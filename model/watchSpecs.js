@@ -12,6 +12,6 @@ const watchSpecsSchema = new mongoose.Schema({
   strapMaterial: String, // Chất liệu dây (ví dụ: "Silicone")
   isFitnessTracker: Boolean, // Theo dõi sức khỏe (true/false)
 });
-
-const WatchSpecs = mongoose.model("watches", watchSpecsSchema);
+const WatchSpecs =
+  mongoose.models.watches || mongoose.model("watches", watchSpecsSchema);
 module.exports = WatchSpecs;

@@ -13,6 +13,6 @@ const tabletSpecsSchema = new mongoose.Schema({
   weight: String, // Khối lượng (ví dụ: "490g")
   hasStylusSupport: Boolean, // Hỗ trợ bút cảm ứng (ví dụ: true/false)
 });
-
-const TabletSpecs = mongoose.model("ipad", tabletSpecsSchema);
+const TabletSpecs =
+  mongoose.models.ipad || mongoose.model("ipad", tabletSpecsSchema);
 module.exports = TabletSpecs;

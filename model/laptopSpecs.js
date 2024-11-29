@@ -14,6 +14,7 @@ const laptopSpecsSchema = new mongoose.Schema({
   usbPorts: Number, // Số cổng USB (ví dụ: 3)
   hasTouchscreen: Boolean, // Màn hình cảm ứng (true/false)
 });
+const LaptopSpecs =
+  mongoose.models.laptop || mongoose.model("laptop", laptopSpecsSchema);
 
-const LaptopSpecs = mongoose.model("laptop", laptopSpecsSchema);
 module.exports = LaptopSpecs;
